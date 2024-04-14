@@ -28,4 +28,26 @@ export class TasksService {
   getAll() {
     return this.tasks;
   }
+
+  getTaskById(taskId: number) {
+    return this.tasks.find((task) => task.id === taskId);
+  }
+
+  updateTask(id: number, task: Partial<CreateTaskDto>) {
+    const taskToUpdate = this.getTaskById(id);
+    if (taskToUpdate) {
+      Object.assign(taskToUpdate, task);
+      return 'task updated';
+    }
+    return 'task not found';
+  }
+
+  deleteTask(id: number) {
+    const taskToDelete = this.getTaskById(id);
+    if (taskToDelete) {
+      this.tasks = this.tasks.filter((task) => task.id !== id);
+      return 'task deleted';
+    }
+    return 'task not found';
+  }
 }
